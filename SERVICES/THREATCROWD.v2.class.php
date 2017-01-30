@@ -149,7 +149,6 @@ class THREATCROWD2_API extends SOA_BASE{
 	*/
 	public function getReport($params = null){
 		if(!isset($params["TYPE"]) || !isset($this->TYPES[strtolower($params["TYPE"])])){
-			echo '$this->TYPES['.strtolower($params["TYPE"]).'] '.PHP_EOL;
 			return $params;
 		}
 		if(!isset($params["VALUE"])){
@@ -164,18 +163,14 @@ class THREATCROWD2_API extends SOA_BASE{
 				$this->requestURL = $this->END_POINT.$this->SEARCH.strtolower($params["TYPE"]).$reportURI.$this->$TYPES[strtolower($params["TYPE"])].'='.$params["VALUE"];
 				break;
 			default:
-				$this->requestURL = strtolower($params["TYPE"]).$reportURI.strtolower($params["TYPE"]).'='.$params["VALUE"];
+				$this->requestURL = $this->END_POINT.$this->SEARCH.strtolower($params["TYPE"]).$reportURI.strtolower($params["TYPE"]).'='.$params["VALUE"];
 				break;
 		}
-		echo __METHOD__.__LINE__.'$this->requestURL<pre>['.var_export($this->requestURL, true).']</pre>'.'<br>'; 
 		$this->serviceResponse = $this->makeCall();
-		echo __METHOD__.__LINE__.'$this->serviceResponse<pre>['.var_export($this->serviceResponse, true).']</pre>'.'<br>'; 
-		$this->requestURL = '';
+
 		if(isset($this->serviceResponse) ){ ///&& 'OK' == $this->serviceResponse["status"]
 			return $this->serviceResponse;
 		}
-		
-		
 		return false;
 	}
 	
@@ -183,7 +178,9 @@ class THREATCROWD2_API extends SOA_BASE{
 	
 	
 	/**
-	* DESCRIPTOR: make Curl Call :
+	* DESCRIPTOR: up vote 
+	* https://github.com/threatcrowd/ApiV2#votes
+	* 
 	* 
 	* @access public 
 	* @param array params
@@ -195,17 +192,16 @@ class THREATCROWD2_API extends SOA_BASE{
 		}
 		$requestURI = 'vote=1&value='.$value;
 		$this->requestURL = $this->END_POINT.$this->VOTE.$requestURI;
-		echo __METHOD__.__LINE__.'$this->requestURL<pre>['.var_export($this->requestURL, true).']</pre>'.'<br>'; 
 		$this->serviceResponse = $this->makeCall();
-		echo __METHOD__.__LINE__.'$this->serviceResponse<pre>['.var_export($this->serviceResponse, true).']</pre>'.'<br>'; 
-		$this->requestURL = '';
-		if(isset($this->serviceResponse) ){ ///&& 'OK' == $this->serviceResponse["status"]
+		if(isset($this->serviceResponse) ){
 			return $this->serviceResponse;
 		}
 		return false;
 	}
 	/**
-	* DESCRIPTOR: make Curl Call :
+	* DESCRIPTOR: down vote
+	* https://github.com/threatcrowd/ApiV2#votes
+	* 
 	* 
 	* @access public 
 	* @param array params
@@ -220,8 +216,8 @@ class THREATCROWD2_API extends SOA_BASE{
 		echo __METHOD__.__LINE__.'$this->requestURL<pre>['.var_export($this->requestURL, true).']</pre>'.'<br>'; 
 		$this->serviceResponse = $this->makeCall();
 		echo __METHOD__.__LINE__.'$this->serviceResponse<pre>['.var_export($this->serviceResponse, true).']</pre>'.'<br>'; 
-		$this->requestURL = '';
-		if(isset($this->serviceResponse) ){ ///&& 'OK' == $this->serviceResponse["status"]
+
+		if(isset($this->serviceResponse) ){ /// isset($this->serviceResponse["response_code"]) && 1 == $this->serviceResponse["response_code"])
 			return $this->serviceResponse;
 		}
 		return false;
@@ -237,12 +233,11 @@ class THREATCROWD2_API extends SOA_BASE{
 	*/
 	public function makeCall(){
 	
-		$header[] = $this->extensions[$this->mimeType];
-		#$CURLOPT_URL = $this->requestURL.'?'.$this->reqestMessage;
-		$CURLOPT_URL = $this->END_POINT.$this->requestURL;
-		echo '$CURLOPT_URL<pre>'.var_export($CURLOPT_URL,true).'</pre>';
+		$header[] = $this->mimeType;
+		
+		$CURLOPT_URL = $this->requestURL;
+
 		$ch = curl_init();
-		#curl_setopt($ch, CURLOPT_USERAGENT, 'XtraDoh xAgent');
 		curl_setopt($ch, CURLOPT_URL, $CURLOPT_URL);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 900);
 		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
@@ -252,22 +247,21 @@ class THREATCROWD2_API extends SOA_BASE{
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-		#curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-		#curl_setopt($ch, CURLOPT_USERPWD, "$this->login:$this->password"); 
 		curl_setopt($ch, CURLINFO_HEADER_OUT, true);
-		#curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $this->reqestType);
-		#curl_setopt($ch, CURLOPT_POSTFIELDS, $this->reqestMessage);
 		
 		/**
-		CURLOPT_COOKIE
-		CURLOPT_ENCODING
-		CURLOPT_CUSTOMREQUEST 
+			curl_setopt($ch, CURLOPT_USERAGENT, 'XtraDoh xAgent');
+			curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+			curl_setopt($ch, CURLOPT_USERPWD, "$this->login:$this->password"); 
+			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $this->reqestType);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $this->reqestMessage);
+
 		*/
 		$data = curl_exec($ch);
-		echo '$data<pre>'.var_export($data,true).'</pre>';
+		
 		$info = curl_getinfo($ch);
-		echo '$info<pre>'.var_export($info,true).'</pre>';
-	
+		
+		$this->requestURL = '';
 		return $data;
 	}
 	
