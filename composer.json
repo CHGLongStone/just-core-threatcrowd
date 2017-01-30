@@ -1,0 +1,31 @@
+{
+	"name" : "just-core/threatcrowd",
+	"description" : "PHP Wrapper for https://github.com/threatcrowd/ApiV2 ",
+	"license" : "GNU",
+	"keywords" : [
+		"just-core",
+		"Service Oriented Architechture",
+		"Enterprise",
+		"HA",
+		"Framework",
+		"http",
+		"wrapper",
+		"api",
+		"scan",
+	],
+	"version" : "0.*",
+	"homepage" : "https://chglongstone.github.io/just-core-threatcrowd",
+	"require" : {
+		"php" : ">=5.3.3"
+	},
+	"suggest": {
+		"just-core/foundation": "PHP Enterprise (HA) High Availability Framework, develop quick and simple, deploy quick and consistent",
+		"just-core/scripts": "management scripts for the just-core eco system, basic release management stuff, db syncronization some other things",
+		"just-core/stub": "Stub application for the just-core eco system, see how simple it is..."
+	},
+	"autoload" : {
+		"classmap" : [
+			"SERVICES"
+		]
+	}
+}
