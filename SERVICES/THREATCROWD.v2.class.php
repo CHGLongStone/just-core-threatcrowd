@@ -193,7 +193,7 @@ class THREATCROWD2_API extends SOA_BASE{
 		if(null === $value){
 			return false;
 		}
-		$requestURI = 'vote=1&value='$value;
+		$requestURI = 'vote=1&value='.$value;
 		$this->requestURL = $this->END_POINT.$this->VOTE.$requestURI;
 		echo __METHOD__.__LINE__.'$this->requestURL<pre>['.var_export($this->requestURL, true).']</pre>'.'<br>'; 
 		$this->serviceResponse = $this->makeCall();
@@ -215,8 +215,8 @@ class THREATCROWD2_API extends SOA_BASE{
 		if(null === $value){
 			return false;
 		}
-		$requestURI = 'vote=0&value='$value;
-		$this->requestURL = $this->END_POINT.$this->VOTE.$requestURI
+		$requestURI = 'vote=0&value='.$value;
+		$this->requestURL = $this->END_POINT.$this->VOTE.$requestURI;
 		echo __METHOD__.__LINE__.'$this->requestURL<pre>['.var_export($this->requestURL, true).']</pre>'.'<br>'; 
 		$this->serviceResponse = $this->makeCall();
 		echo __METHOD__.__LINE__.'$this->serviceResponse<pre>['.var_export($this->serviceResponse, true).']</pre>'.'<br>'; 
