@@ -148,8 +148,8 @@ class THREATCROWD2_API extends SOA_BASE{
 	* @return bool
 	*/
 	public function getReport($params = null){
-		if(!isset($params["TYPE"]) || !isset($this->$TYPES[strtolower($params["TYPE"])])){
-			echo '$this->$TYPES['.strtolower($params["TYPE"]).'] '.PHP_EOL;
+		if(!isset($params["TYPE"]) || !isset($this->TYPES[strtolower($params["TYPE"])])){
+			echo '$this->TYPES['.strtolower($params["TYPE"]).'] '.PHP_EOL;
 			return $params;
 		}
 		if(!isset($params["VALUE"])){
