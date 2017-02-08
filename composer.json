@@ -13,7 +13,7 @@
 		"api",
 		"scan"
 	],
-	"version" : "0.*",
+	"version" : "v0.8.1",
 	"homepage" : "https://chglongstone.github.io/just-core-threatcrowd",
 	"require" : {
 		"php" : ">=5.3.3"
