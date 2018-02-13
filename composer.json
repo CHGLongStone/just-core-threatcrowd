@@ -1,7 +1,7 @@
 {
 	"name" : "just-core/threatcrowd",
 	"description" : "PHP Wrapper for https://github.com/threatcrowd/ApiV2 ",
-	"license" : "GNU",
+	"license" : "GPL-3.0-or-later",
 	"keywords" : [
 		"just-core",
 		"Service Oriented Architechture",
